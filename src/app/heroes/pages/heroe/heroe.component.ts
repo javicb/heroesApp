@@ -12,7 +12,7 @@ import { HeroesService } from '../../services/heroes.service';
 })
 export class HeroeComponent implements OnInit {
 
-  heroe: Heroe[] = [];
+  heroe!: Heroe;
 
   constructor(private activateRoute: ActivatedRoute, private heroesService: HeroesService) { }
 
