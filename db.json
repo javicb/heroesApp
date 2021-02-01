@@ -169,12 +169,30 @@
     },
     {
       "superhero": "Robin",
-      "alter_ego": "",
+      "alter_ego": "Ricardo Tapia",
       "characters": "",
       "first_appearance": "",
       "publisher": "DC Comics",
       "alt_img": "",
       "id": "0OvWg00"
+    },
+    {
+      "superhero": "Robin 3",
+      "alter_ego": "",
+      "characters": "",
+      "first_appearance": "",
+      "publisher": "DC Comics",
+      "alt_img": "",
+      "id": "-pfK9r2"
+    },
+    {
+      "superhero": "Robin 5",
+      "alter_ego": "",
+      "characters": "",
+      "first_appearance": "",
+      "publisher": "DC Comics",
+      "alt_img": "",
+      "id": "uzuaTFT"
     }
   ]
 }
