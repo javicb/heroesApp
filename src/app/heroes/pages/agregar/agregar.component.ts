@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 import { Heroe, Publisher } from '../../interfaces/heroes.interface';
 import { HeroesService } from '../../services/heroes.service';
 
@@ -38,7 +40,7 @@ export class AgregarComponent implements OnInit {
   };
 
   constructor(private heroeService: HeroesService, private activatedRoute: ActivatedRoute, private router: Router,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (!this.router.url.includes('editar')) {
@@ -74,11 +76,22 @@ export class AgregarComponent implements OnInit {
   }
 
   borrar(): void {
-    this.heroeService.borrarHeroe(this.heroe.id!)
-      .subscribe(resp => {
-        this.mostrarSnackbar('Héroe borrado');
-        this.router.navigate(['/heroes']);
-      });
+    const dialog = this.dialog.open(ConfirmarComponent, {
+      width: '350px',
+      data: { ...this.heroe }
+    });
+
+    dialog.afterClosed().subscribe(
+      result => {
+        if (result) {
+          this.heroeService.borrarHeroe(this.heroe.id!)
+            .subscribe(resp => {
+              this.mostrarSnackbar('Héroe borrado');
+              this.router.navigate(['/heroes']);
+            });
+        }
+      }
+    );
   }
 
   mostrarSnackbar(mensaje: string): void {
@@ -86,5 +99,7 @@ export class AgregarComponent implements OnInit {
       duration: 2500
     });
   }
+
+
 
 }
