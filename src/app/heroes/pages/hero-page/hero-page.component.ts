@@ -32,12 +32,12 @@ export class HeroPageComponent implements OnInit {
             return;
           }
           this.hero = hero;
-          console.log(this.hero);
         }
       );
+  }
 
-    // this.heroesService.getHeroes()
-    //   .subscribe(heroes => console.log(heroes));
+  goBack(): void  {
+    this.router.navigate(['/heroes/list']);
   }
 
 
