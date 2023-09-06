@@ -25,6 +25,9 @@ export class HeroesService {
       );
   }
 
-
+  // retrieving a list of heroes that match a search query
+  getSuggestions( query: string ): Observable<Hero[]> {
+    return this.httpClient.get<Hero[]>(`${ this.baseUrl }/heroes?q=${ query }&_limit=6`);
+  }
 
 }
