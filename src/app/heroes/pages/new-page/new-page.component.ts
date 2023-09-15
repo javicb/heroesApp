@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Hero, Publisher } from '../../interfaces/hero.interface';
 import { HeroesService } from '../../services/heroes.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+
+// material
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-new-page',
@@ -33,7 +38,8 @@ export class NewPageComponent implements OnInit {
   constructor(private heroService: HeroesService,
     private activateRoute: ActivatedRoute,
     private router: Router,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog) { }
 
   get currentHero(): Hero {
     return this.heroForm.value as Hero;
@@ -87,11 +93,30 @@ export class NewPageComponent implements OnInit {
       });
   }
 
-
   // show snackbar
   private showSnackbar(message: string) {
     this.snackbar.open(message, 'ok!', {
       duration: 2500
+    });
+  }
+
+  // confirm delete
+  deleteConfirm() {
+    if (!this.currentHero.id) {
+      throw Error('No se puede eliminar un heroe que no existe');
+    }
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: this.heroForm.value
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+
+      // TODO: delete hero
+      console.log('Borrando');
     });
   }
 

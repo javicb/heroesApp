@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Eliminar héroe?</h1>
+<div mat-dialog-content>
+  <p>No se podrá deshacer esta acción</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No gracias</button>
+  <span class="spacer"></span>
+  <button mat-button color="warn" (click)="onConfirm()" cdkFocusInitial>
+    Eliminar
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
