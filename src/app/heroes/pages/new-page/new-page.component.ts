@@ -37,7 +37,20 @@ export class NewPageComponent {
     if (this.heroForm.invalid) {
       return;
     }
-    console.log(this.heroForm.value);
+
+    if (!this.currentHero.id) {
+      this.createHero();
+    }
   }
+
+  // create hero
+  private createHero() {
+    this.heroService.createHero(this.currentHero)
+      .subscribe(hero => {
+        // TODO: show message and redirect to /heroes/edit/:id
+        console.log('created', hero)
+      });
+  }
+
 
 }
