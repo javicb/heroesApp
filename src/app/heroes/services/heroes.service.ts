@@ -4,7 +4,7 @@ import { Hero } from '../interfaces/hero.interface';
 import { environment } from 'src/environments/environment';
 import { Observable, catchError, map, of } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class HeroesService {
 
   private baseUrl: string = environment.baseUrl;
@@ -18,7 +18,7 @@ export class HeroesService {
   }
 
   // get hero by id
-  getHeroById(id: string): Observable<Hero|undefined> {
+  getHeroById(id: string): Observable<Hero | undefined> {
     return this.httpClient.get<Hero>(`${this.baseUrl}/heroes/${id}`)
       .pipe(
         catchError(err => of(undefined))
@@ -26,8 +26,8 @@ export class HeroesService {
   }
 
   // retrieving a list of heroes that match a search query
-  getSuggestions( query: string ): Observable<Hero[]> {
-    return this.httpClient.get<Hero[]>(`${ this.baseUrl }/heroes?q=${ query }&_limit=6`);
+  getSuggestions(query: string): Observable<Hero[]> {
+    return this.httpClient.get<Hero[]>(`${this.baseUrl}/heroes?q=${query}&_limit=6`);
   }
 
   // create hero
@@ -41,11 +41,11 @@ export class HeroesService {
   }
 
   // delete hero
-  deleteHero(id: string): Observable<boolean> {
+  deleteHeroById(id: string): Observable<boolean> {
     return this.httpClient.delete(`${this.baseUrl}/heroes/${id}`)
       .pipe(
-        catchError(() => of(false)),
-        map(() => true)
+        map(() => true),
+        catchError(() => of(false))
       );
   }
 

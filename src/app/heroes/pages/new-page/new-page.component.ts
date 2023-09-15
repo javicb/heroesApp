@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Hero, Publisher } from '../../interfaces/hero.interface';
 import { HeroesService } from '../../services/heroes.service';
-import { switchMap } from 'rxjs';
+import { filter, switchMap } from 'rxjs';
 
 // material
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -100,8 +100,8 @@ export class NewPageComponent implements OnInit {
     });
   }
 
-  // confirm delete
-  deleteConfirm() {
+  // delet hero
+  onDelete() {
     if (!this.currentHero.id) {
       throw Error('No se puede eliminar un heroe que no existe');
     }
@@ -110,14 +110,14 @@ export class NewPageComponent implements OnInit {
       data: this.heroForm.value
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) {
-        return;
-      }
-
-      // TODO: delete hero
-      console.log('Borrando');
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        filter((result: boolean) => result === true),
+        switchMap(() => this.heroService.deleteHeroById(this.currentHero.id)),
+        filter((result: boolean) => result === true)
+      )
+      .subscribe(() => {
+        this.router.navigate(['/heroes']);
+      });
   }
-
 }
